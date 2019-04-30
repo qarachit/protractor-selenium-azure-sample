@@ -13,22 +13,25 @@ variables:
   LT_USERNAME: 'robovipin'
   LT_ACCESS_KEY: 'bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI'
 
-steps:
-- task: NodeTool@0
+jobs:
+- job: InitialJob
+  steps:
+  - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
-
-steps:
-- script: |
+- job: SubsequentA
+  dependsOn: InitialJob
+  steps:
+  - script: |
     wget https://s3.amazonaws.com/lambda-tunnel/LT_Linux.zip
     sudo apt-get install unzip
     unzip LT_Linux.zip
     ./LT -user robovipin -key bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI
-  displayName: 'setup tunnel'
-  
-steps:
-- script: |
+- job: SubsequentB
+  dependsOn: InitialJob
+  steps:
+  - script: |
     npm install
     npm install -g protractor
     cd conf
