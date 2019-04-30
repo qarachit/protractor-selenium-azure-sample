@@ -18,22 +18,15 @@ steps:
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
-  
-jobs:
-- job: SetupTunnel
-  steps:
-  - script: |
+- script: |
     wget https://s3.amazonaws.com/lambda-tunnel/LT_Linux.zip
     sudo apt-get install unzip
     unzip LT_Linux.zip
     ./LT -user robovipin -key bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI
-
-- job: RunTests
-  dependsOn: SetupTunnel
-  steps:
-  - script: |
+  displayName: 'setup tunnel'
+- script: |
     npm install
     npm install -g protractor
     cd conf
     protractor local.conf.js
-  displayName: 'npm install and run tests'
+  displayName: 'npm install and build'
