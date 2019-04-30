@@ -1,3 +1,4 @@
+
 # Node.js
 # Build a general Node.js project with npm.
 # Add steps that analyze code, save build artifacts, deploy, and more:
@@ -17,6 +18,7 @@ steps:
 
 - script: |
     npm install
+    ls -al
     npm install -g protractor
     protractor single.conf.js
   displayName: 'npm install and build'
