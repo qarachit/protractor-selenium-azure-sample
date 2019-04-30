@@ -20,5 +20,7 @@ steps:
     npm install
     ls -al
     npm install -g protractor
+    cd conf
+    ls -al
     protractor single.conf.js
   displayName: 'npm install and build'
