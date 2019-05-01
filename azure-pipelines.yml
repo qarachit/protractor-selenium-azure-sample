@@ -19,6 +19,7 @@ jobs:
         displayName: 'Install Node.js'
 
   - job: 'B'
+    timeoutInMinutes: 1
     dependsOn: 'A'
     steps:
       - script: |
