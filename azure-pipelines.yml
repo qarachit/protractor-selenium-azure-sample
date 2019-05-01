@@ -23,7 +23,6 @@ steps:
   inputs:
     - script: |
       wget https://s3.amazonaws.com/lambda-tunnel/LT_Linux.zip
-      sudo apt-get install unzip
       unzip LT_Linux.zip
       ./LT -user robovipin -key bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI
     displayName: 'Install Tunnel'
