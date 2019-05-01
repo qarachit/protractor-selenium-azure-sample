@@ -19,7 +19,6 @@ jobs:
         displayName: 'Install Node.js'
 
   - job: 'B'
-    timeoutInMinutes: 1
     dependsOn: 'A'
     steps:
       - script: |
@@ -29,12 +28,11 @@ jobs:
           ./LT -user robovipin -key bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI
         displayName: 'Deploy Tunnel'
 
-  - job: 'C'
-    dependsOn: 'B'
-    steps:
-      - script: |
-          npm install
-          npm install -g protractor
-          cd conf
-          protractor local.conf.js
+      - task: CmdLine@2
+        inputs:
+          script: |
+            npm Install
+            npm install -g protractor
+            cd conf
+            protractor local.conf.js
         displayName: 'Run Tests'
