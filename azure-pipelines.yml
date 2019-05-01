@@ -19,16 +19,18 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- script: |
-    # Download Lambda Tunnel
-    wget https://s3.amazonaws.com/lambda-tunnel/LT_Linux.zip
-    # Install unzip
-    sudo apt-get install unzip
-    # unzip zip
-    unzip LT_Linux.zip
-    # Setup Tunnel
-    ./LT -user robovipin -key bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI
-  displayName: 'Install Tunnel'
+- task: CmdLine@2
+  inputs:
+    - script: |
+      # Download Lambda Tunnel
+      wget https://s3.amazonaws.com/lambda-tunnel/LT_Linux.zip
+      # Install unzip
+      sudo apt-get install unzip
+      # unzip zip
+      unzip LT_Linux.zip
+      # Setup Tunnel
+      ./LT -user robovipin -key bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI
+    displayName: 'Install Tunnel'
   
 - script: |
     npm install
