@@ -6,33 +6,34 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'Ubuntu-16.04'
-
 variables:
   LT_USERNAME: 'robovipin'
   LT_ACCESS_KEY: 'bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+jobs:
+  - job: 'A'
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.x'
+        displayName: 'Install Node.js'
 
-- task: CmdLine@2
-  inputs:
-    script: |
-      wget https://s3.amazonaws.com/lambda-tunnel/LT_Linux.zip
-      sudo apt-get install unzip
-      unzip LT_Linux.zip
-      ./LT -user robovipin -key bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI
-  displayName: 'install tunnel'
+  - job: 'B'
+    dependsOn: 'A'
+    steps:
+      - script: |
+          wget https://s3.amazonaws.com/lambda-tunnel/LT_Linux.zip
+          sudo apt-get install unzip
+          unzip LT_Linux.zip
+          ./LT -user robovipin -key bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI
+        displayName: 'Deploy Tunnel'
 
-- task: CmdLine@2
-  inputs:
-    script: |
-      npm install
-      npm install -g protractor
-      cd conf
-      protractor local.conf.js
-  displayName: 'npm install and build'
+  - job: 'C'
+    dependsOn: 'B'
+    steps:
+      - script: |
+          npm install
+          npm install -g protractor
+          cd conf
+          protractor local.conf.js
+        displayName: 'Run Tests'
