@@ -6,15 +6,14 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'Ubuntu-16.04'
-
 variables:
   LT_USERNAME: 'robovipin'
   LT_ACCESS_KEY: 'bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI'
 
 jobs:
 - job: InitialJob
+  pool:
+    vmImage: 'Ubuntu-16.04'
   steps:
   - task: NodeTool@0
   inputs:
@@ -22,6 +21,8 @@ jobs:
   displayName: 'Install Node.js'
 - job: SubsequentA
   dependsOn: InitialJob
+  pool:
+    vmImage: 'Ubuntu-16.04'
   steps:
   - script: |
     wget https://s3.amazonaws.com/lambda-tunnel/LT_Linux.zip
@@ -30,6 +31,8 @@ jobs:
     ./LT -user robovipin -key bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI
 - job: SubsequentB
   dependsOn: SubsequentA
+  pool:
+    vmImage: 'Ubuntu-16.04'
   steps:
   - script: |
     npm install
