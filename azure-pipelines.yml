@@ -39,7 +39,4 @@ jobs:
   steps:
   - script: |
     npm install
-    npm install -g protractor
-    cd conf
-    protractor local.conf.js
   displayName: 'npm install and run tests'
