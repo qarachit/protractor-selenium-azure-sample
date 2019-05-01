@@ -28,11 +28,11 @@ jobs:
           ./LT -user robovipin -key bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI
         displayName: 'Deploy Tunnel'
 
-      - task: CmdLine@2
-        inputs:
-          script: |
-            npm Install
-            npm install -g protractor
-            cd conf
-            protractor local.conf.js
+  - job: 'C'
+    steps:
+      - script: |
+          npm install
+          npm install -g protractor
+          cd conf
+          protractor local.conf.js
         displayName: 'Run Tests'
