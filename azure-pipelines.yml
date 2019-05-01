@@ -8,14 +8,16 @@ variables:
   LT_USERNAME: 'robovipin'
   LT_ACCESS_KEY: 'bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI'
 
-steps:
-- task: NodeTool@0
+jobs:
+- job: Task
+  steps:
+  - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
-
-jobs:
+  
 - job: SetupTunnel_1
+  dependsOn: Task
   steps:
   - script: wget https://s3.amazonaws.com/lambda-tunnel/LT_Linux.zip
  
