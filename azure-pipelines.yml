@@ -6,34 +6,22 @@
 trigger:
 - master
 
+pool:
+  vmImage: 'Ubuntu-16.04'
+
 variables:
   LT_USERNAME: 'robovipin'
   LT_ACCESS_KEY: 'bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI'
 
-jobs:
-  - job: 'A'
-    steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: '10.x'
-        displayName: 'Install Node.js'
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
 
-  - job: 'B'
-    dependsOn: 'A'
-    steps:
-      - script: |
-          wget https://s3.amazonaws.com/lambda-tunnel/LT_Linux.zip
-          sudo apt-get install unzip
-          unzip LT_Linux.zip
-          ./LT -user robovipin -key bX3VZpiN4Tp7cLD7MTfoXqqOZK3q7Xov7UcSCwGQkzf1MEB6bI
-        displayName: 'Deploy Tunnel'
-
-  - job: 'C'
-    dependsOn: 'B'
-    steps:
-      - script: |
-          npm install
-          npm install -g protractor
-          cd conf
-          protractor local.conf.js
-        displayName: 'Run Tests'
+- script: |
+    npm install
+    npm install -g protractor
+    cd conf
+    protractor single.conf.js
+  displayName: 'npm install and build'
